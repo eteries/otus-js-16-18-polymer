@@ -1,0 +1,84 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="tree-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      button {
+        padding: 8px 40px;
+        font-size: 16px;
+       }
+    </style>
+
+      <label>
+        <textarea cols="40" rows="15" value="{{userValue::input}}">[[example]]</textarea>
+      </label>
+      <div><button on-click="plant">[[prop1]]</button></div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class TreeForm extends Polymer.Element {
+      static get is() { return 'tree-form'; }
+      constructor() {
+        super();
+        this.example = '{"id": 1, "items": [{"id": 2, "items": [{"id": 3}, {"id": 4}]}]}';
+        this.userValue = this.example;
+      }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'Plant your tree'
+          },
+          markup: {
+            notify: true,
+            value: this.markup
+          },
+          example: {
+            type: String,
+            value: this.example
+          }
+        };
+      }
+      plant() {
+        try {
+          const obj = JSON.parse(this.userValue);
+          this.markup = this.createTree(obj);
+        } catch(err) {
+          console.log(err);
+          this.userValue = "Parsing error. Only JSON formatted objects can be accepted. Refresh page to see example";
+        }
+      }
+      createTree(obj) {
+        const tree = document.createElement('tree-elem');
+
+        const createLeaf = function(obj) {
+          const leaf = document.createElement('tree-leaf');
+          leaf.setAttribute('id', obj.id);
+
+          if (obj.items) {
+            const subtree = document.createElement('tree-elem');
+            obj.items.forEach(item => {
+              const leaf = createLeaf(item);
+              subtree.appendChild(leaf);
+            });
+            leaf.appendChild(subtree);
+          }
+          return leaf;
+        };
+
+        tree.appendChild(createLeaf(obj));
+        return tree;
+      }
+    }
+
+    window.customElements.define(TreeForm.is, TreeForm);
+  </script>
+</dom-module>

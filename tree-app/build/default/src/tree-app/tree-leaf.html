@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="tree-leaf">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin-left: 16px;
+      }
+      .leaf {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: green;
+        color: white;
+        text-align: center;
+        line-height: 40px;
+        position: relative;
+        border-radius: 50%;
+      }
+      .leaf:after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        background: green;
+        width: 1px;
+        height: 20px;
+      }
+    </style>
+    <li class="leaf">[[id]]</li>
+    <slot></slot>
+  </template>
+
+  <script>class TreeLeaf extends Polymer.Element {
+  static get is() {
+    return 'tree-leaf';
+  }
+
+  static get properties() {
+    return {
+      id: {
+        type: String,
+        value: '0',
+        reflectToAttribute: true
+      }
+    };
+  }
+
+}
+
+window.customElements.define(TreeLeaf.is, TreeLeaf);</script>
+</dom-module>

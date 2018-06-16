@@ -1,0 +1,42 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="tree-elem">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        padding-top: 10px;
+      }
+
+      ul {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        justify-content: center;
+      }
+
+      ul:before {
+        content: '';
+        position: absolute;
+        top: 24px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: green;
+      }
+    </style>
+    <ul><slot></slot></ul>
+  </template>
+
+  <script>
+    class TreeElem extends Polymer.Element {
+      constructor() {
+        super();
+      }
+      static get is() { return 'tree-elem'; }
+    }
+
+    window.customElements.define(TreeElem.is, TreeElem);
+  </script>
+</dom-module>
