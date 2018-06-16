@@ -1,0 +1,7 @@
+{
+  "name": "tree-app",
+  "short_name": "tree-app",
+  "description": "A tree rendering application",
+  "start_url": "/",
+  "display": "standalone"
+}

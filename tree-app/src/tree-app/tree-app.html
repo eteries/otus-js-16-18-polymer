@@ -1,0 +1,55 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="tree-form.html">
+<link rel="import" href="tree-elem.html">
+<link rel="import" href="tree-leaf.html">
+
+<dom-module id="tree-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <div style="display: flex">
+      <tree-form markup="{{markup}}"></tree-form>
+      <div id="output"></div>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class TreeApp extends Polymer.Element {
+      constructor() {
+        super();
+      }
+      static get is() { return 'tree-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'tree-app'
+          },
+          markup: {
+            type: String,
+            value: '',
+            observer: '_parse'
+          }
+        };
+      }
+      _parse(newValue) {
+        if(newValue) {
+          const output = this.shadowRoot.querySelector('#output');
+          output.innerHTML = '';
+          output.appendChild(newValue);
+        }
+
+      }
+    }
+
+    window.customElements.define(TreeApp.is, TreeApp);
+  </script>
+</dom-module>
